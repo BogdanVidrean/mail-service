@@ -42,7 +42,7 @@ public class SendGridRequestHandler {
      *
      * @param request The specific request
      * @return An optional response for the request
-     * @throws IOException If there is a problem with the connection to the service
+     * @throws IOException If there is a problem with the connection to SendGrid service
      */
     public Optional<Response> executeRequest(final Request request) throws IOException {
         Optional<SendGrid> sendGridOptional = empty();

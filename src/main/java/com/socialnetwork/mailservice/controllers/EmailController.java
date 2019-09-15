@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+import static org.springframework.http.HttpStatus.ACCEPTED;
+
 @RestController
 @RequestMapping("/api/emails")
-public class EmailController {
+public class EmailController extends ExceptionHandlingController {
 
     private final EmailService emailService;
 
@@ -24,13 +26,13 @@ public class EmailController {
     }
 
     @PostMapping
-    @ApiOperation(value = "send a new email")
+    @ApiOperation(value = "Send a new email")
     @ApiResponses(value = {
             @ApiResponse(code = 202, message = "Accepted"),
             @ApiResponse(code = 400, message = "Bad Request")})
     public ResponseEntity<?> sendEmail(@Valid @RequestBody EmailInputVo emailInputVo) {
         emailService.sendEmail(emailInputVo);
-        return null;
+        return new ResponseEntity<>(ACCEPTED);
     }
 
 }

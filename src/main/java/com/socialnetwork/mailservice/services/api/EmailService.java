@@ -6,4 +6,5 @@ public interface EmailService {
 
     void sendEmail(final EmailInputVo emailInputVo);
 
+    void retrySendFailedEmails();
 }

@@ -1,13 +1,16 @@
 package com.socialnetwork.mailservice;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
+
+import static org.springframework.boot.SpringApplication.run;
 
 @SpringBootApplication(scanBasePackages = "com.socialnetwork.mailservice")
+@EnableScheduling
 public class MailserviceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MailserviceApplication.class, args);
+        run(MailserviceApplication.class, args);
     }
 
 }

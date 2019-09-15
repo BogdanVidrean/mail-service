@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+
+    <changeSet id="create emails table" author="mail_service">
+        <createTable tableName="EMAILS">
+
+            <column name="ID" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="EMAILS_PK"/>
+            </column>
+
+            <column name="SENDER" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="SUBJECT" type="VARCHAR(1023)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="BODY" type="VARCHAR(2047)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create emails_to table" author="mail_service">
+        <createTable tableName="EMAILS_TO">
+            <column name="EMAIL_ID" type="BIGINT"/>
+            <column name="TO" type="VARCHAR(255)"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="EMAIL_ID"
+                                 baseTableName="EMAILS_TO"
+                                 constraintName="fk_email_to"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="EMAILS"/>
+    </changeSet>
+
+    <changeSet id="create emails_cc table" author="mail_service">
+        <createTable tableName="EMAILS_CC">
+            <column name="EMAIL_ID" type="BIGINT"/>
+            <column name="CC" type="VARCHAR(255)"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="EMAIL_ID"
+                                 baseTableName="EMAILS_CC"
+                                 constraintName="fk_email_cc"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="EMAILS"/>
+    </changeSet>
+
+    <changeSet id="create emails_cbc table" author="mail_service">
+        <createTable tableName="EMAILS_BCC">
+            <column name="EMAIL_ID" type="BIGINT"/>
+            <column name="BCC" type="VARCHAR(255)"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="EMAIL_ID"
+                                 baseTableName="EMAILS_BCC"
+                                 constraintName="fk_email_bcc"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="EMAILS"/>
+    </changeSet>
+
+    <changeSet id="sequence" author="mail_service">
+        <createSequence
+                cycle="false"
+                incrementBy="1"
+                minValue="1"
+                sequenceName="email_seq"
+                startValue="1"
+        />
+    </changeSet>
+
+
+</databaseChangeLog>
