@@ -68,9 +68,8 @@ public class EmailServiceImpl implements EmailService {
             persistEmail(emailInputVo);
         } catch (IOException e) {
             String message = e.getMessage();
-            if (contains(message, "400Body")) {
-                //  that's some bad handling from SendGrid because they throw an IOException for invalid arguments
-                //  e.g. email address
+            if (contains(message, "Request returned status Code")) {
+                //  An IOException is thrown for an error from SendGrid
                 throw new MailServiceHttpException(e.getMessage(), BAD_REQUEST);
             }
         }
