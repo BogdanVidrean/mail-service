@@ -20,9 +20,11 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+import static com.google.common.collect.Maps.newHashMap;
 import static com.google.common.collect.Sets.newHashSet;
 import static com.sendgrid.Method.POST;
 import static org.apache.commons.lang3.StringUtils.contains;
@@ -52,12 +54,15 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     @Transactional
-    public void sendEmail(final EmailInputVo emailInputVo) {
+    public Map<String, String> sendEmail(final EmailInputVo emailInputVo) {
         Mail newEmail = createNewEmail(emailInputVo);
         Request newSendRequest = createNewSendRequest(newEmail);
         try {
             Optional<Response> response = sendGridRequestHandler.executeRequest(newSendRequest);
             response.ifPresent(sendGridResponse -> validateResponse(sendGridResponse, emailInputVo));
+            if (response.isPresent()) {
+                return response.get().getHeaders();
+            }
         } catch (UnknownHostException e) {
             // network error while connecting to SendGrid service, so we save the message and try to send again later
             persistEmail(emailInputVo);
@@ -69,6 +74,7 @@ public class EmailServiceImpl implements EmailService {
                 throw new MailServiceHttpException(e.getMessage(), BAD_REQUEST);
             }
         }
+        return newHashMap();
     }
 
     @Override

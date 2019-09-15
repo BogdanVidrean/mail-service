@@ -2,9 +2,11 @@ package com.socialnetwork.mailservice.services.api;
 
 import com.socialnetwork.mailservice.utils.vos.EmailInputVo;
 
+import java.util.Map;
+
 public interface EmailService {
 
-    void sendEmail(final EmailInputVo emailInputVo);
+    Map<String, String> sendEmail(final EmailInputVo emailInputVo);
 
     void retrySendFailedEmails();
 }
