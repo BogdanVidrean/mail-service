@@ -11,9 +11,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static com.google.common.collect.Maps.newHashMap;
 import static com.google.common.collect.Sets.newHashSet;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -39,7 +40,7 @@ public class EmailControllerTest {
     @Test
     public void testSendEmailWithToAsDestination() throws Exception {
         EmailInputVo emailInputVoOnlyWithTo = createEmailInputVoWithTo();
-        doNothing().when(emailService).sendEmail(any(EmailInputVo.class));
+        doReturn(newHashMap()).when(emailService).sendEmail(any(EmailInputVo.class));
 
         mockMvc.perform(post("/api/emails")
                 .content(objectMapper.writeValueAsString(emailInputVoOnlyWithTo))
@@ -51,7 +52,7 @@ public class EmailControllerTest {
     @Test
     public void testSendEmailWithToAndCcAsDestination() throws Exception {
         EmailInputVo emailInputVoWithToAndCc = createEmailInputVoWithToAndCc();
-        doNothing().when(emailService).sendEmail(any(EmailInputVo.class));
+        doReturn(newHashMap()).when(emailService).sendEmail(any(EmailInputVo.class));
 
         mockMvc.perform(post("/api/emails")
                 .content(objectMapper.writeValueAsString(emailInputVoWithToAndCc))
@@ -62,7 +63,7 @@ public class EmailControllerTest {
     @Test
     public void testSendEmailWithToAndCcAndBccAsDestination() throws Exception {
         EmailInputVo emailInputVoWithToAndCcAndBcc = createEmailInputVoWithToAndCcAndBcc();
-        doNothing().when(emailService).sendEmail(any(EmailInputVo.class));
+        doReturn(newHashMap()).when(emailService).sendEmail(any(EmailInputVo.class));
 
         mockMvc.perform(post("/api/emails")
                 .content(objectMapper.writeValueAsString(emailInputVoWithToAndCcAndBcc))
