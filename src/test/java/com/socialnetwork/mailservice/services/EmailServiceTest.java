@@ -24,6 +24,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
@@ -61,6 +62,19 @@ public class EmailServiceTest {
     public void testSendEmailAndThrowIOExceptionFromSendGrid() throws IOException {
         EmailInputVo emailInputVo = createEmailInputVo();
         doThrow(new IOException("message")).when(sendGridRequestHandler).executeRequest(any(Request.class));
+
+        emailService.sendEmail(emailInputVo);
+
+        verify(sendGridRequestHandler).init();
+        verify(sendGridRequestHandler).executeRequest(any(Request.class));
+        verifyNoMoreInteractions(sendGridRequestHandler);
+        verifyNoMoreInteractions(emailRepository);
+    }
+
+    @Test
+    public void testSendEmailAndNoConnectionAvaiableToSendGrid() throws IOException {
+        EmailInputVo emailInputVo = createEmailInputVo();
+        doThrow(new UnknownHostException("message")).when(sendGridRequestHandler).executeRequest(any(Request.class));
 
         emailService.sendEmail(emailInputVo);
 

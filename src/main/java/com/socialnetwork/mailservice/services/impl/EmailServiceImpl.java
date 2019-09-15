@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +25,7 @@ import java.util.Set;
 
 import static com.google.common.collect.Sets.newHashSet;
 import static com.sendgrid.Method.POST;
+import static org.apache.commons.lang3.StringUtils.contains;
 import static org.springframework.data.domain.PageRequest.of;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.valueOf;
@@ -56,9 +58,16 @@ public class EmailServiceImpl implements EmailService {
         try {
             Optional<Response> response = sendGridRequestHandler.executeRequest(newSendRequest);
             response.ifPresent(sendGridResponse -> validateResponse(sendGridResponse, emailInputVo));
-        } catch (IOException e) {
-            // network error while connecting to SendGrid service
+        } catch (UnknownHostException e) {
+            // network error while connecting to SendGrid service, so we save the message and try to send again later
             persistEmail(emailInputVo);
+        } catch (IOException e) {
+            String message = e.getMessage();
+            if (contains(message, "400Body")) {
+                //  that's some bad handling from SendGrid because they throw an IOException for invalid arguments
+                //  e.g. email address
+                throw new MailServiceHttpException(e.getMessage(), BAD_REQUEST);
+            }
         }
     }
 
@@ -82,7 +91,11 @@ public class EmailServiceImpl implements EmailService {
                         }
                     });
                 } catch (IOException e) {
-                    // don't remove the email from db and try again later
+                    if (contains(e.getMessage(), "400Body")) {
+                        // this point will be reached for an invalid email, so we add it in the collection that will
+                        // be removed from the database
+                        successfullySentEmails.add(email);
+                    }
                 }
             });
             emailRepository.deleteAll(successfullySentEmails);
