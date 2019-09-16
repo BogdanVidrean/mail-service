@@ -43,7 +43,14 @@ The configured pipeline can be found in .travis.yml.
 
 The build status and history is available here: [https://travis-ci.org/BogdanVidrean/mail-service].
 
-The swagger interface for the artifact deployed on Heroku can be found here: [https://mail-service321.herokuapp.com/swagger-ui.html], or you can send POST request to the following available endpoint [https://mail-service321.herokuapp.com/api/emails].
+The swagger interface for the artifact deployed on Heroku can be found here: [https://mail-service321.herokuapp.com/swagger-ui.html], or you can send POST request to the following available endpoint [https://mail-service321.herokuapp.com/api/emails].\
+**NOTE**: 
+
+1) The testing service runs on a Free Plan of SendGrid, so there might be some limitations regarding api access,
+and emails. Also check Spam folders because the Free Plan uses shared IP addresses not private ones, so it is
+possible to share the same IP address with a scammer who also uses SendGrid.
+2) The yahoo blocked all the incoming email so far (surprisingly I was able to send twice an email with an address
+from their domain). I recommend using Gmail, and also check the spam folder. 
 
 The process consists of the following steps:
 1. Start a new build (including running all tests available) after every push or merge in master branch.
@@ -96,7 +103,7 @@ purposes, especially for the available [service](https://mail-service321.herokua
 or by accessing `protocol://host:port/swagger-ui.html if you run the service on you computer.
 
 6) For creating an instance of an Email that is accepted by SendGrid I created a
-builder class that allows to customize the email as you wish.
+builder [class](src/main/java/com/socialnetwork/mailservice/utils/sendgrid/SendGridEmailBuilder.java) that allows you to customize the email as you wish.
 
 7) Testing. For the testing part, I implements tests for all the layers (api, business and data). For the data
 layer I used a H2 configuration that creates a new database before each suite of tests, and in this manner
@@ -127,7 +134,6 @@ CONSTRAINTS: \
 The following fields cannot be empty: "from"
 The following fields cannot be empty due to SendGrid limitation: "subject", "body"
 The following array cannot be empty: "to"
-
     
 # Possible Future Enhancement
 
