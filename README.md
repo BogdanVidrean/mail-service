@@ -50,7 +50,7 @@ The swagger interface for the artifact deployed on Heroku can be found here: [ht
 and emails. Also check Spam folders because the Free Plan uses shared IP addresses not private ones, so it is
 possible to share the same IP address with a scammer who also uses SendGrid.
 2) The yahoo blocked all the incoming email so far (surprisingly I was able to send twice an email with an address
-from their domain). I recommend using Gmail, and also check the spam folder. 
+from their domain). I recommend using Gmail, and also check the spam folder. I was also able to use Microsoft's Outlook.
 
 The process consists of the following steps:
 1. Start a new build (including running all tests available) after every push or merge in master branch.
