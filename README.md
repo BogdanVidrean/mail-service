@@ -14,7 +14,7 @@ Steps:
 1. Clone the repository using ssh `git@github.com:BogdanVidrean/mail-service.git` or https 
 `https://github.com/BogdanVidrean/mail-service.git`.
 2. Open the project in your favorite IDE (IntelliJ Idea is recommended).
-3. Run `maven clean install` in a terminal/cmd that is opened at the root of the project in order to
+3. Run `mvn clean install` in a terminal/cmd that is opened at the root of the project in order to
 build the project.
 
 Note: `mvn test` will run al the tests and `mvn clean` will remove the results of the previous build.
