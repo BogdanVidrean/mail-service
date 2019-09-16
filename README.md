@@ -1,5 +1,7 @@
 # Email Service
 [![Build Status](https://travis-ci.org/BogdanVidrean/mail-service.svg?branch=master)](https://travis-ci.org/BogdanVidrean/mail-service)
+
+
 #Description
 Email service that exposes a HTTP interface for sending email, using SendGrid under the hood.
 
@@ -46,6 +48,7 @@ The swagger interface for the artifact deployed on Heroku can be found here: [ht
 The process consists of the following steps:
 1. Start a new build (including running all tests available) after every push or merge in master branch.
 2. In case of successful build, deploy the new artifact on Heroku.
+
 
 #Design and Implementation
 
