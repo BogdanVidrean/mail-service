@@ -135,11 +135,11 @@ The following fields cannot be empty: "from"
 The following fields cannot be empty due to SendGrid limitation: "subject", "body"
 The following array cannot be empty: "to"
 
-RESPONSE:
-    202 Accepted: The email was accepted by the server (It also returns a JSON containing all the headers that were populated by SendGrid and that help to identify the email
-    in the dashboard. It is empty for email cached on the mail service due to inactivity of SendGrid)
-    400 Bad Request: The provided information is not valid
-    500 Internal Server Error: Something went wrong on the server side.
+RESPONSE:\
+    - 202 Accepted: The email was accepted by the server (It also returns a JSON containing all the headers that were populated by SendGrid and that help to identify the email
+    in the dashboard. It is empty for email cached on the mail service due to inactivity of SendGrid)\
+    - 400 Bad Request: The provided information is not valid\
+    - 500 Internal Server Error: Something went wrong on the server side.
     
 # Possible Future Enhancement
 
