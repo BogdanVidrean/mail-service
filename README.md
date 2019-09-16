@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/BogdanVidrean/mail-service.svg?branch=master)](https://travis-ci.org/BogdanVidrean/mail-service)
 
 
-#Description
+# Description
 Email service that exposes a HTTP interface for sending email, using SendGrid under the hood.
 
 # How To Clone/Build
@@ -50,7 +50,7 @@ The process consists of the following steps:
 2. In case of successful build, deploy the new artifact on Heroku.
 
 
-#Design and Implementation
+# Design and Implementation
 
 This web service is implemented using Java with Spring Boot. In order to facilitate the development process,
 I decided to use SendGrid as the mail service used to send emails. For the authentication to this service
